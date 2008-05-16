@@ -6,7 +6,7 @@
 * Game Page (a) start button, b) playing)
 * Score Panel (Avatars, Your Score, Other peoples' scores, accuracy)
 
-== Login or Registration
+== Login or Registration ==
 * Ask for username if you want to login
 * If want to register
  * ask for username and avatar upload
@@ -40,5 +40,3 @@
  * total bullets
  * shots taken
  * successful hits
-
-
