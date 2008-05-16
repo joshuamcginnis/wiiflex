@@ -1,0 +1,36 @@
+#summary One-sentence summary of this page.
+
+= Requirements =
+
+* Splash (Login, Registration)
+* Game Page (a) start button, b) playing)
+* Score Panel (Avatars, Your Score, Other peoples' scores, accuracy)
+
+== Game Play == 
+
+* A target (avatar) randomly bounces around a box at increasing speeds
+* Targets move faster incrementally the more you hit them
+
+=== Wii Stuff ===
+* Rumble on successful hit
+* Emit sound from Wii on hit
+
+== Real-Time Scoring Box==
+
+* Displays your score and has a top 10 players that update real-time
+* Scoring: Total Bullets, Shots taken, # of hits (accuracy: #hits/#taken
+
+== DataBase == 
+* user
+ * name
+ * avatar
+* game table
+ * user
+ * game id
+ * total bullets
+ * shots taken
+ * successful hits
+
+
+
+
