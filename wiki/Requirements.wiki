@@ -31,12 +31,16 @@
 * Scoring: Total Bullets, Shots taken, # of hits (accuracy: #hits/#taken
 
 == Database == 
-* user
+* user table
  * name
  * avatar
 * game table
  * user
- * game id
  * total bullets
  * shots taken
  * successful hits
+* smackdown table
+ * smackdown text
+* smackqueue table
+ * smackdown
+ * user
