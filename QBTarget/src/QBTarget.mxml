@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+			
+			import flash.display.Sprite;
+			
+			private var _targetRadius:int = 30;
+			private var _target:UIComponent = new UIComponent();
+			private var _targetLocation:Point = new Point();
+			private var _fieldRect:Rectangle = new Rectangle(_targetRadius, _targetRadius);
+			
+			private function onStartGame():void
+			{
+				_fieldRect.width = field.width - (2 * _targetRadius);
+				_fieldRect.height = field.height - (2 * _targetRadius);
+				_targetLocation.x = (Math.random() * _fieldRect.width) + _targetRadius;
+				_targetLocation.y = (Math.random() * _fieldRect.height) + _targetRadius;
+				
+				_target.graphics.clear();
+				if (field.contains(_target))
+				{
+					field.removeChild(_target);
+				}
+				
+				_target.graphics.beginFill(0x009900);
+				_target.graphics.drawCircle(_targetLocation.x, _targetLocation.y ,_targetRadius);
+				_target.graphics.endFill();
+				
+				field.addChild(_target);
+				
+				//btnStartGame.enabled = false;
+			}
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="100%" height="100%">
+		<mx:Canvas width="100%" height="20">
+		</mx:Canvas>
+		<mx:HBox width="100%">
+			<mx:VBox width="200" height="100%">
+				<mx:Form width="100%" height="100%">
+					<mx:FormItem >
+						
+					</mx:FormItem>
+				</mx:Form>
+				<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()" />
+			</mx:VBox>
+			<mx:Canvas id="field" width="100%" height="100%" resize="onStartGame()">
+			</mx:Canvas>
+		</mx:HBox>
+	</mx:VBox>
+</mx:Application>
