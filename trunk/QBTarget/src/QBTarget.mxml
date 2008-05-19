@@ -17,6 +17,12 @@
 			private var _targetTimer:Timer = new Timer(50, 0);
 			private var _angleCorrection:Number = 0.2;
 			
+			[Bindable] 
+			private var _bullets:int = 30;
+
+			[Bindable] 
+			private var _score:int = 0;
+			
 			private function onInitialize():void
 			{
 				_targetTimer.addEventListener(TimerEvent.TIMER, onMoveTarget);
@@ -25,7 +31,9 @@
 			private function onStartGame():void
 			{
 				_targetTimer.stop();
-				//btnStartGame.enabled = false;
+				btnStartGame.enabled = false;
+				
+				_score = 0;
 				
 				_fieldRect.x = _targetRadius;
 				_fieldRect.y = _targetRadius;
@@ -48,8 +56,16 @@
 				
 				field.addChild(_target);
 				
+				if (!_target.hasEventListener(MouseEvent.CLICK))
+				{
+					_target.addEventListener(MouseEvent.CLICK, onHit);
+				}
+				if (!field.hasEventListener(MouseEvent.CLICK))
+				{
+					field.addEventListener(MouseEvent.CLICK, onShot);
+				}
+				
 				_targetDirection = (Math.random() * ((2 * Math.PI) - (2 * _angleCorrection))) + _angleCorrection;
-				myDirection.text = _targetDirection.toString();
 /* 				if ((_targetDirection >= (90 - _angleCorrection) && _targetDirection <= 90) || (_targetDirection >= (270 - _angleCorrection) && _targetDirection <= 270))
 				{
 					_targetDirection -= _angleCorrection;
@@ -102,6 +118,34 @@
 				
 				_target.move(_targetLocation.x, _targetLocation.y);
 			}
+			
+			private function onShot(event:MouseEvent):void
+			{
+				_bullets--;
+				if (_bullets == 0)
+				{
+					_targetTimer.stop();
+					btnStartGame.enabled = true;
+					
+					_bullets = 30;
+					
+					if (_target.hasEventListener(MouseEvent.CLICK))
+					{
+						_target.removeEventListener(MouseEvent.CLICK, onHit);
+					}
+					
+					if (field.hasEventListener(MouseEvent.CLICK))
+					{
+						field.removeEventListener(MouseEvent.CLICK, onShot);
+					}
+				}
+			}
+			
+			private function onHit(event:MouseEvent):void
+			{
+				_score++;
+			}
+			
 		]]>
 	</mx:Script>
 	
@@ -115,13 +159,10 @@
 						<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()" />
 					</mx:FormItem>
 					<mx:FormItem label="Shots Remaining:" width="100%" direction="horizontal">
-						<mx:Text id="myAmmo" text="30" />
+						<mx:Text id="myAmmo" text="{_bullets}" />
 					</mx:FormItem>
 					<mx:FormItem label="Score:" width="100%" direction="horizontal">
-						<mx:Text id="myScore" text="0" />
-					</mx:FormItem>
-					<mx:FormItem label="Direction:" width="100%" direction="horizontal">
-						<mx:Text id="myDirection" text="0" />
+						<mx:Text id="myScore" text="{_score}" />
 					</mx:FormItem>
 				</mx:Form>
 			</mx:VBox>
