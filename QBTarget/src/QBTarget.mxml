@@ -56,13 +56,13 @@
 				
 				field.addChild(_target);
 				
-				if (!_target.hasEventListener(MouseEvent.CLICK))
+				if (!_target.hasEventListener(MouseEvent.MOUSE_DOWN))
 				{
-					_target.addEventListener(MouseEvent.CLICK, onHit);
+					_target.addEventListener(MouseEvent.MOUSE_DOWN, onHit);
 				}
-				if (!field.hasEventListener(MouseEvent.CLICK))
+				if (!field.hasEventListener(MouseEvent.MOUSE_DOWN))
 				{
-					field.addEventListener(MouseEvent.CLICK, onShot);
+					field.addEventListener(MouseEvent.MOUSE_DOWN, onShot);
 				}
 				
 				_targetDirection = (Math.random() * ((2 * Math.PI) - (2 * _angleCorrection))) + _angleCorrection;
@@ -129,14 +129,14 @@
 					
 					_bullets = 30;
 					
-					if (_target.hasEventListener(MouseEvent.CLICK))
+					if (_target.hasEventListener(MouseEvent.MOUSE_DOWN))
 					{
-						_target.removeEventListener(MouseEvent.CLICK, onHit);
+						_target.removeEventListener(MouseEvent.MOUSE_DOWN, onHit);
 					}
 					
-					if (field.hasEventListener(MouseEvent.CLICK))
+					if (field.hasEventListener(MouseEvent.MOUSE_DOWN))
 					{
-						field.removeEventListener(MouseEvent.CLICK, onShot);
+						field.removeEventListener(MouseEvent.MOUSE_DOWN, onShot);
 					}
 				}
 			}
