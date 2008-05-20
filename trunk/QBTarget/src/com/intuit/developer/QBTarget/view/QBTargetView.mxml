@@ -79,7 +79,7 @@
 					field.removeChild(_target);
 				}
 				
-				_target.graphics.beginFill(0x009900);
+				_target.graphics.beginFill(0x192f9b);
 				_target.graphics.drawCircle(0, 0 ,_targetRadius);
 				_target.x = (Math.random() * _fieldRect.width) + _targetRadius;
 				_target.y = (Math.random() * _fieldRect.height) + _targetRadius;
@@ -151,7 +151,7 @@
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%">
 			<mx:VBox height="100%">
-				<mx:Form width="100%" height="100%">
+				<mx:Form width="100%" height="165">
 					<mx:FormItem horizontalAlign="right" width="100%" direction="horizontal">
 						<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()" />
 					</mx:FormItem>
@@ -162,7 +162,7 @@
 						<mx:Text id="myScore" text="{_score}" />
 					</mx:FormItem>
 				</mx:Form>
-				<mx:DataGrid id="gameList" dataProvider="{model.gameList}" width="100%">
+				<mx:DataGrid id="gameList" dataProvider="{model.gameList}" width="453" height="50%">
 					<mx:columns>
 						<mx:DataGridColumn dataField="RelatedUser" headerText="Player" />
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
