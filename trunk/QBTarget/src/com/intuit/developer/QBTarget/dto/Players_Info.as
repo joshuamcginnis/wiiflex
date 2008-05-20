@@ -26,6 +26,28 @@ package com.intuit.developer.QBTarget.dto
 			field = new FieldDescriptor();
 			field.lusFid = 0;
 			field.unique = false;
+			field.fieldType = ENFieldType.UserId;
+			field.required = false;
+			field.doesDataCopy = true;
+			field.carryChoices = true;
+			field.lutFid = 0;
+			field.mode = ENMode.NotFound;
+			field.findEnabled = true;
+			field.fieldName = "User";
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Int32;
+			field.allowNewChoices = true;
+			field.label = "User";
+			field.foreignKey = 0;
+			field.role = ENRole.NotFound;
+			field.fieldHelp = "";
+			field.fid = 12;
+			_UserInfo = new UserIdField(field);
+			_fieldInfo.addItem(_UserInfo);
+
+			field = new FieldDescriptor();
+			field.lusFid = 0;
+			field.unique = false;
 			field.width = 40;
 			field.appendOnly = false;
 			field.fieldType = ENFieldType.Text;
@@ -305,6 +327,7 @@ package com.intuit.developer.QBTarget.dto
 		}
 
 		// MetaData Information Objects
+		private var _UserInfo:UserIdField;
 		private var _NameInfo:TextField;
 		private var _AvitarInfo:FileField;
 		private var _GamesInfo:DbLinkField;
@@ -318,6 +341,7 @@ package com.intuit.developer.QBTarget.dto
 		private var _LastModifiedByInfo:UserIdField;
 
 		// MetaData Information Objects getters
+		public function get User_Info():UserIdField						{return _UserInfo;}
 		public function get Name_Info():TextField						{return _NameInfo;}
 		public function get Avitar_Info():FileField						{return _AvitarInfo;}
 		public function get Games_Info():DbLinkField					{return _GamesInfo;}
@@ -331,8 +355,8 @@ package com.intuit.developer.QBTarget.dto
 		public function get LastModifiedBy_Info():UserIdField			{return _LastModifiedByInfo;}
 
 		// Field getter variables
-		private var _fieldNames:ArrayCollection = new ArrayCollection(["Name", "Avitar", "Games", "AddGame", "Entries", "AddEntry", 
-																		"DateCreated", "DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
+		private var _fieldNames:ArrayCollection = new ArrayCollection(["User", "Name", "Avitar", "Games", "AddGame", "Entries", 
+																		"AddEntry", "DateCreated", "DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
 		private var _fieldInfo:ArrayCollection = new ArrayCollection();
 
 		// Field getters

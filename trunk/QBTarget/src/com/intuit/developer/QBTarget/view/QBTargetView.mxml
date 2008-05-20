@@ -5,6 +5,9 @@
           height="100%" width="100%">
    <mx:Script>
          <![CDATA[
+         	import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
+         	import com.intuit.developer.QBTarget.dto.Games_Info;
+         	import com.intuit.developer.QBTarget.dto.Games_DTO;
          	import com.quickbase.idn.control.events.KingussieEvent;
            import mx.core.UIComponent;
          
@@ -33,6 +36,8 @@
            private function initPanel(ev:Event):void
            {
                if (!panelInitialized) {
+               	   var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
+               	   getGameList.dispatch();
                    panelInitialized = true;
                }
            }
@@ -156,7 +161,7 @@
 						<mx:Text id="myScore" text="{_score}" />
 					</mx:FormItem>
 				</mx:Form>
-				<mx:DataGrid id="gameList" dataProvider="{model.gamesList}" width="100%">
+				<mx:DataGrid id="gameList" dataProvider="{model.gameList}" width="100%">
 					<mx:columns>
 						<mx:DataGridColumn dataField="RelatedUser" headerText="Player" />
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
