@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<projectInfo>
+    <projectInfoVersion>0.0</projectInfoVersion>
+    <projectProperties>
+        <frameworkVersion>1.1</frameworkVersion>
+        <dto>executed</dto>
+        <state>QBApp</state>
+    </projectProperties>
+    <applicationName>QBTarget</applicationName>
+    <packageName>com.intuit.developer.QBTarget</packageName>
+    <proxyName></proxyName>
+    <proxyPort>8080</proxyPort>
+    <msaApplication>false</msaApplication>
+    <demoDomain>false</demoDomain>
+    <username>Robert_Pilachowski@intuit.com</username>
+    <developerKey>pecet5c6pn349unuptic48ds3d</developerKey>
+    <database dbid="bdh6fi8xh">
+        <appDBName>WiiFlex</appDBName>
+    </database>
+</projectInfo>
