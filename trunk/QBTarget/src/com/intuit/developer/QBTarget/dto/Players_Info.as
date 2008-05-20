@@ -10,126 +10,170 @@ package com.intuit.developer.QBTarget.dto
 	import com.quickbase.idn.fieldtypes.text.*;
 	import mx.collections.ArrayCollection;
 
-	public class Games_Info implements IKingussieInfo
+	public class Players_Info implements IKingussieInfo
 	{
 		// Important Note:
 		//    This class was automatically generated.  If you make changes to it and
 		//    subsequently run the generator tool again, all changes will be overwritten!
 
-		private static var _instance:Games_Info = null;
+		private static var _instance:Players_Info = null;
 
-		function Games_Info(forcePrivateClass:Private)
+		function Players_Info(forcePrivateClass:Private)
 		{
 			// MetaData Initializers
 			var field:FieldDescriptor;
 
 			field = new FieldDescriptor();
-			field.commaStart = 4;
 			field.lusFid = 0;
 			field.unique = false;
-			field.blankIsZero = true;
-			field.fieldType = ENFieldType.Float;
+			field.width = 40;
+			field.appendOnly = false;
+			field.fieldType = ENFieldType.Text;
 			field.required = false;
 			field.doesDataCopy = true;
 			field.carryChoices = true;
 			field.lutFid = 0;
 			field.mode = ENMode.NotFound;
-			field.units = "";
 			field.findEnabled = true;
-			field.fieldName = "TotalBullets";
+			field.fieldName = "Name";
 			field.formula = "";
-			field.tableName = "Games";
-			field.baseType = ENBaseType.Float;
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Text;
 			field.allowNewChoices = false;
-			field.decimalPlaces = -1;
-			field.label = "TotalBullets";
+			field.label = "Name";
 			field.foreignKey = 0;
+			field.allowHTML = false;
 			field.role = ENRole.NotFound;
 			field.fieldHelp = "";
 			field.fid = 6;
-			_TotalBulletsInfo = new NumberField(field);
-			_fieldInfo.addItem(_TotalBulletsInfo);
+			field.numLines = 1;
+			_NameInfo = new TextField(field);
+			_fieldInfo.addItem(_NameInfo);
 
 			field = new FieldDescriptor();
-			field.commaStart = 4;
 			field.lusFid = 0;
 			field.unique = false;
-			field.blankIsZero = true;
-			field.fieldType = ENFieldType.Float;
+			field.fieldType = ENFieldType.File;
 			field.required = false;
-			field.doesDataCopy = true;
+			field.doesDataCopy = false;
 			field.carryChoices = true;
 			field.lutFid = 0;
 			field.mode = ENMode.NotFound;
-			field.units = "";
 			field.findEnabled = true;
-			field.fieldName = "ShotsTaken";
-			field.formula = "";
-			field.tableName = "Games";
-			field.baseType = ENBaseType.Float;
+			field.fieldName = "Avitar";
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Text;
 			field.allowNewChoices = false;
-			field.decimalPlaces = -1;
-			field.label = "ShotsTaken";
+			field.maxVersions = 3;
+			field.label = "Avitar";
 			field.foreignKey = 0;
 			field.role = ENRole.NotFound;
 			field.fieldHelp = "";
 			field.fid = 7;
-			_ShotsTakenInfo = new NumberField(field);
-			_fieldInfo.addItem(_ShotsTakenInfo);
+			_AvitarInfo = new FileField(field);
+			_fieldInfo.addItem(_AvitarInfo);
 
 			field = new FieldDescriptor();
-			field.commaStart = 4;
+			field.targetFID = 9;
 			field.lusFid = 0;
 			field.unique = false;
-			field.blankIsZero = true;
-			field.fieldType = ENFieldType.Float;
+			field.fieldType = ENFieldType.DbLink;
 			field.required = false;
-			field.doesDataCopy = true;
+			field.doesDataCopy = false;
 			field.carryChoices = true;
+			field.targetDBID = "bdh6fi8xj";
 			field.lutFid = 0;
-			field.mode = ENMode.NotFound;
-			field.units = "";
+			field.mode = ENMode.Virtual;
+			field.sourceFID = 3;
 			field.findEnabled = true;
-			field.fieldName = "Hits";
-			field.formula = "";
-			field.tableName = "Games";
-			field.baseType = ENBaseType.Float;
+			field.fieldName = "Games";
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Text;
+			field.exact = true;
 			field.allowNewChoices = false;
-			field.decimalPlaces = -1;
-			field.label = "Hits";
+			field.label = "Games";
 			field.foreignKey = 0;
 			field.role = ENRole.NotFound;
 			field.fieldHelp = "";
 			field.fid = 8;
-			_HitsInfo = new NumberField(field);
-			_fieldInfo.addItem(_HitsInfo);
+			field.coverText = "Games";
+			_GamesInfo = new DbLinkField(field);
+			_fieldInfo.addItem(_GamesInfo);
 
 			field = new FieldDescriptor();
-			field.commaStart = 0;
 			field.lusFid = 0;
 			field.unique = false;
-			field.blankIsZero = true;
-			field.fieldType = ENFieldType.Float;
+			field.appearsAs = "Add  Game";
+			field.fieldType = ENFieldType.URL;
 			field.required = false;
-			field.doesDataCopy = true;
+			field.doesDataCopy = false;
 			field.carryChoices = true;
 			field.lutFid = 0;
-			field.mode = ENMode.NotFound;
-			field.units = "";
-			field.findEnabled = true;
-			field.fieldName = "RelatedUser";
-			field.formula = "";
-			field.tableName = "Games";
-			field.baseType = ENBaseType.Float;
+			field.mode = ENMode.Virtual;
+			field.findEnabled = false;
+			field.fieldName = "AddGame";
+			field.formula = "URLRoot() & \"db/\" & [_DBID_GAMES] & \"?a=API_GenAddRecordForm&_fid_9=\" & URLEncode ([Record ID#])& \"&z=\" & Rurl()";
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Text;
 			field.allowNewChoices = false;
-			field.decimalPlaces = 0;
-			field.label = "RelatedUser";
+			field.label = "Add Game";
 			field.foreignKey = 0;
 			field.role = ENRole.NotFound;
 			field.fieldHelp = "";
 			field.fid = 9;
-			_RelatedUserInfo = new NumberField(field);
-			_fieldInfo.addItem(_RelatedUserInfo);
+			_AddGameInfo = new URLField(field);
+			_fieldInfo.addItem(_AddGameInfo);
+
+			field = new FieldDescriptor();
+			field.targetFID = 6;
+			field.lusFid = 0;
+			field.unique = false;
+			field.fieldType = ENFieldType.DbLink;
+			field.required = false;
+			field.doesDataCopy = false;
+			field.carryChoices = true;
+			field.targetDBID = "bdh6fi8xm";
+			field.lutFid = 0;
+			field.mode = ENMode.Virtual;
+			field.sourceFID = 3;
+			field.findEnabled = true;
+			field.fieldName = "Entries";
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Text;
+			field.exact = true;
+			field.allowNewChoices = false;
+			field.label = "Entries";
+			field.foreignKey = 0;
+			field.role = ENRole.NotFound;
+			field.fieldHelp = "";
+			field.fid = 10;
+			field.coverText = "Entries";
+			_EntriesInfo = new DbLinkField(field);
+			_fieldInfo.addItem(_EntriesInfo);
+
+			field = new FieldDescriptor();
+			field.lusFid = 0;
+			field.unique = false;
+			field.appearsAs = "Add  Entry";
+			field.fieldType = ENFieldType.URL;
+			field.required = false;
+			field.doesDataCopy = false;
+			field.carryChoices = true;
+			field.lutFid = 0;
+			field.mode = ENMode.Virtual;
+			field.findEnabled = false;
+			field.fieldName = "AddEntry";
+			field.formula = "URLRoot() & \"db/\" & [_DBID_ENTRIES] & \"?a=API_GenAddRecordForm&_fid_6=\" & URLEncode ([Record ID#])& \"&z=\" & Rurl()";
+			field.tableName = "Players";
+			field.baseType = ENBaseType.Text;
+			field.allowNewChoices = false;
+			field.label = "Add Entry";
+			field.foreignKey = 0;
+			field.role = ENRole.NotFound;
+			field.fieldHelp = "";
+			field.fid = 11;
+			_AddEntryInfo = new URLField(field);
+			_fieldInfo.addItem(_AddEntryInfo);
 
 			field = new FieldDescriptor();
 			field.lusFid = 0;
@@ -142,7 +186,7 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.NotFound;
 			field.findEnabled = false;
 			field.fieldName = "DateCreated";
-			field.tableName = "Games";
+			field.tableName = "Players";
 			field.baseType = ENBaseType.Int64;
 			field.allowNewChoices = false;
 			field.label = "Date Created";
@@ -164,7 +208,7 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.NotFound;
 			field.findEnabled = false;
 			field.fieldName = "DateModified";
-			field.tableName = "Games";
+			field.tableName = "Players";
 			field.baseType = ENBaseType.Int64;
 			field.allowNewChoices = false;
 			field.label = "Date Modified";
@@ -186,7 +230,7 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.Virtual;
 			field.findEnabled = true;
 			field.fieldName = "RecordId";
-			field.tableName = "Games";
+			field.tableName = "Players";
 			field.baseType = ENBaseType.Int32;
 			field.allowNewChoices = false;
 			field.label = "Record ID#";
@@ -208,7 +252,7 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.NotFound;
 			field.findEnabled = true;
 			field.fieldName = "RecordOwner";
-			field.tableName = "Games";
+			field.tableName = "Players";
 			field.baseType = ENBaseType.Int32;
 			field.allowNewChoices = true;
 			field.label = "Record Owner";
@@ -230,7 +274,7 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.NotFound;
 			field.findEnabled = true;
 			field.fieldName = "LastModifiedBy";
-			field.tableName = "Games";
+			field.tableName = "Players";
 			field.baseType = ENBaseType.Int32;
 			field.allowNewChoices = true;
 			field.label = "Last Modified By";
@@ -243,16 +287,16 @@ package com.intuit.developer.QBTarget.dto
 
 		}
 
-		public static function getInstance():Games_Info
+		public static function getInstance():Players_Info
 		{
 			if(_instance == null)
-				_instance = new Games_Info(new Private);
+				_instance = new Players_Info(new Private);
 			return _instance;
 		}
 
 		public function get tableName():String
 		{
-			return "Games";
+			return "Players";
 		}
 
 		public function getFieldInfo(name:String):AbstractField
@@ -261,10 +305,12 @@ package com.intuit.developer.QBTarget.dto
 		}
 
 		// MetaData Information Objects
-		private var _TotalBulletsInfo:NumberField;
-		private var _ShotsTakenInfo:NumberField;
-		private var _HitsInfo:NumberField;
-		private var _RelatedUserInfo:NumberField;
+		private var _NameInfo:TextField;
+		private var _AvitarInfo:FileField;
+		private var _GamesInfo:DbLinkField;
+		private var _AddGameInfo:URLField;
+		private var _EntriesInfo:DbLinkField;
+		private var _AddEntryInfo:URLField;
 		private var _DateCreatedInfo:TimeStampField;
 		private var _DateModifiedInfo:TimeStampField;
 		private var _RecordIdInfo:RecordIdField;
@@ -272,10 +318,12 @@ package com.intuit.developer.QBTarget.dto
 		private var _LastModifiedByInfo:UserIdField;
 
 		// MetaData Information Objects getters
-		public function get TotalBullets_Info():NumberField				{return _TotalBulletsInfo;}
-		public function get ShotsTaken_Info():NumberField				{return _ShotsTakenInfo;}
-		public function get Hits_Info():NumberField						{return _HitsInfo;}
-		public function get RelatedUser_Info():NumberField				{return _RelatedUserInfo;}
+		public function get Name_Info():TextField						{return _NameInfo;}
+		public function get Avitar_Info():FileField						{return _AvitarInfo;}
+		public function get Games_Info():DbLinkField					{return _GamesInfo;}
+		public function get AddGame_Info():URLField						{return _AddGameInfo;}
+		public function get Entries_Info():DbLinkField					{return _EntriesInfo;}
+		public function get AddEntry_Info():URLField					{return _AddEntryInfo;}
 		public function get DateCreated_Info():TimeStampField			{return _DateCreatedInfo;}
 		public function get DateModified_Info():TimeStampField			{return _DateModifiedInfo;}
 		public function get RecordId_Info():RecordIdField				{return _RecordIdInfo;}
@@ -283,7 +331,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get LastModifiedBy_Info():UserIdField			{return _LastModifiedByInfo;}
 
 		// Field getter variables
-		private var _fieldNames:ArrayCollection = new ArrayCollection(["TotalBullets", "ShotsTaken", "Hits", "RelatedUser", 
+		private var _fieldNames:ArrayCollection = new ArrayCollection(["Name", "Avitar", "Games", "AddGame", "Entries", "AddEntry", 
 																		"DateCreated", "DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
 		private var _fieldInfo:ArrayCollection = new ArrayCollection();
 

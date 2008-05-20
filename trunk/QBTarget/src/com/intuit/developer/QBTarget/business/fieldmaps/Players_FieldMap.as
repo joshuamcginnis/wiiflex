@@ -3,21 +3,25 @@ package com.intuit.developer.QBTarget.business.fieldmaps
 	import com.quickbase.idn.business.fieldmaps.QuickBaseFieldMap;
 	import com.quickbase.idn.business.fieldmaps.IQuickBaseFieldMap;
 
-	public class SmackdownQueue_FieldMap extends QuickBaseFieldMap implements IQuickBaseFieldMap
+	public class Players_FieldMap extends QuickBaseFieldMap implements IQuickBaseFieldMap
 	{
 		// Important Note:
 		//    This class was automatically generated.  If you make changes to it and
 		//    subsequently run the generator tool again, all changes will be overwritten!
 
-		public function SmackdownQueue_FieldMap()
+		public function Players_FieldMap()
 		{
 			super();
 		}
 
 		protected override function loadFids():void
 		{
-			columnFids.RelatedPlayer = 6;
-			columnFids.RelatedSmackdown = 7;
+			columnFids.Name = 6;
+			columnFids.Avitar = 7;
+			columnFids.Games = 8;
+			columnFids.AddGame = 9;
+			columnFids.Entries = 10;
+			columnFids.AddEntry = 11;
 			columnFids.DateCreated = 1;
 			columnFids.DateModified = 2;
 			columnFids.rid = 3;
