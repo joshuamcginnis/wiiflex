@@ -3,6 +3,7 @@
    xmlns:core="com.quickbase.idn.core.*" 
    xmlns:view="com.intuit.developer.QBTarget.view.*" xmlns:control="com.intuit.developer.QBTarget.control.*"
    creationComplete="initApp()">
+   <mx:Style source="E:\wiiflex\QBTarget\obsidian\style\obsidian.css"/>
     <mx:Script>
        <![CDATA[
          import mx.controls.Alert;
@@ -33,4 +34,5 @@
                <view:QBTargetView id="QBTargetView" model="{model}"/>
          </core:readyView>
    </core:QBApp>
+   <mx:Style source="styles.css"/>
 </mx:Application>
