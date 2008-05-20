@@ -1,0 +1,22 @@
+/* CSS file */
+Application {
+   backgroundColor: #4b73c8;
+   backgroundGradientColors: #0066cc, #68808c;
+   themeColor: #ffffff;
+   color: #000000;
+}
+.gamebox
+{
+	borderStyle: solid;
+    backgroundColor: #ebeff6;
+}
+
+ApplicationControlBar {
+   highlightAlphas: 0.62, 0.16;
+   fillAlphas: 0.6, 0.98;
+   fillColors: #000033, #000000;
+   backgroundColor: #ffffff;
+   cornerRadius: 20;
+   shadowDistance: 4;
+   shadowDirection: center;
+}
