@@ -36,19 +36,19 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.NotFound;
 			field.units = "";
 			field.findEnabled = true;
-			field.fieldName = "RelatedUser";
+			field.fieldName = "RelatedPlayer";
 			field.formula = "";
 			field.tableName = "SmackdownQueue";
 			field.baseType = ENBaseType.Float;
 			field.allowNewChoices = false;
 			field.decimalPlaces = 0;
-			field.label = "Related User";
+			field.label = "Related Player";
 			field.foreignKey = 0;
 			field.role = ENRole.NotFound;
 			field.fieldHelp = "";
 			field.fid = 6;
-			_RelatedUserInfo = new NumberField(field);
-			_fieldInfo.addItem(_RelatedUserInfo);
+			_RelatedPlayerInfo = new NumberField(field);
+			_fieldInfo.addItem(_RelatedPlayerInfo);
 
 			field = new FieldDescriptor();
 			field.commaStart = 0;
@@ -207,7 +207,7 @@ package com.intuit.developer.QBTarget.dto
 		}
 
 		// MetaData Information Objects
-		private var _RelatedUserInfo:NumberField;
+		private var _RelatedPlayerInfo:NumberField;
 		private var _RelatedSmackdownInfo:NumberField;
 		private var _DateCreatedInfo:TimeStampField;
 		private var _DateModifiedInfo:TimeStampField;
@@ -216,7 +216,7 @@ package com.intuit.developer.QBTarget.dto
 		private var _LastModifiedByInfo:UserIdField;
 
 		// MetaData Information Objects getters
-		public function get RelatedUser_Info():NumberField				{return _RelatedUserInfo;}
+		public function get RelatedPlayer_Info():NumberField			{return _RelatedPlayerInfo;}
 		public function get RelatedSmackdown_Info():NumberField			{return _RelatedSmackdownInfo;}
 		public function get DateCreated_Info():TimeStampField			{return _DateCreatedInfo;}
 		public function get DateModified_Info():TimeStampField			{return _DateModifiedInfo;}
@@ -225,7 +225,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get LastModifiedBy_Info():UserIdField			{return _LastModifiedByInfo;}
 
 		// Field getter variables
-		private var _fieldNames:ArrayCollection = new ArrayCollection(["RelatedUser", "RelatedSmackdown", "DateCreated", 
+		private var _fieldNames:ArrayCollection = new ArrayCollection(["RelatedPlayer", "RelatedSmackdown", "DateCreated", 
 																		"DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
 		private var _fieldInfo:ArrayCollection = new ArrayCollection();
 

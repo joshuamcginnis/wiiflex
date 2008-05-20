@@ -5,6 +5,7 @@
           height="100%" width="100%">
    <mx:Script>
          <![CDATA[
+         	import com.quickbase.idn.control.events.KingussieEvent;
            import mx.core.UIComponent;
          
            import com.intuit.developer.QBTarget.model.QBTargetModel; //replace with correct model reference
@@ -155,6 +156,14 @@
 						<mx:Text id="myScore" text="{_score}" />
 					</mx:FormItem>
 				</mx:Form>
+				<mx:DataGrid id="gameList" dataProvider="{model.gamesList}" width="100%">
+					<mx:columns>
+						<mx:DataGridColumn dataField="RelatedUser" headerText="Player" />
+						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
+						<mx:DataGridColumn dataField="ShotsTaken" headerText="Shots Taken" />
+						<mx:DataGridColumn dataField="Hits" headerText="Hits" />
+					</mx:columns>
+				</mx:DataGrid>
 			</mx:VBox>
 			<mx:Canvas id="field" width="100%" height="100%" >
 			</mx:Canvas>

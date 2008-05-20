@@ -15,11 +15,11 @@ package com.intuit.developer.QBTarget.dto
 	import com.quickbase.idn.dto.QuickBaseUserDTO;
 	import com.quickbase.idn.dto.QuickBaseFileDTO;
 	import com.quickbase.idn.model.QuickBaseMSAModel;
-	import com.intuit.developer.QBTarget.business.fieldmaps.SmackdownQueue_FieldMap;
+	import com.intuit.developer.QBTarget.business.fieldmaps.Players_FieldMap;
 	import mx.collections.ArrayCollection;
 
 	[Bindable]
-	public class SmackdownQueue_DTO extends KingussieDTOBase implements IValueObject, IKingussieDTO
+	public class Players_DTO extends KingussieDTOBase implements IValueObject, IKingussieDTO
 	{
 		// Important Note:
 		//    This class was automatically generated.  If you make changes to it and
@@ -31,8 +31,12 @@ package com.intuit.developer.QBTarget.dto
 		// Field value holding objects
 		private var _rid:String;
 		private var _isRecordOwnerDirty:Boolean = false;
-		private var _RelatedPlayer:Number;
-		private var _RelatedSmackdown:Number;
+		private var _Name:String;
+		private var _Avitar:QuickBaseFileDTO = new QuickBaseFileDTO();
+		private var _Games:String;
+		private var _AddGame:String;
+		private var _Entries:String;
+		private var _AddEntry:String;
 		private var _DateCreated:Date;
 		private var _DateModified:Date;
 		private var _RecordId:String;
@@ -41,8 +45,12 @@ package com.intuit.developer.QBTarget.dto
 
 		// Current value getters
 		public function get rid():String								{return _rid;}
-		public function get RelatedPlayer():Number						{return _RelatedPlayer;}
-		public function get RelatedSmackdown():Number					{return _RelatedSmackdown;}
+		public function get Name():String								{return _Name;}
+		public function get Avitar():QuickBaseFileDTO 					{return _Avitar;}
+		public function get Games():String								{return _Games;}
+		public function get AddGame():String							{return _AddGame;}
+		public function get Entries():String							{return _Entries;}
+		public function get AddEntry():String							{return _AddEntry;}
 		public function get DateCreated():Date							{return _DateCreated;}
 		public function get DateModified():Date							{return _DateModified;}
 		public function get RecordId():String							{return _rid;}
@@ -62,8 +70,7 @@ package com.intuit.developer.QBTarget.dto
 			_RecordOwner = val;
 			_isRecordOwnerDirty = true;
 		}
-		public function set RelatedPlayer(val:Number):void				{_RelatedPlayer = val;}
-		public function set RelatedSmackdown(val:Number):void			{_RelatedSmackdown = val;}
+		public function set Name(val:String):void						{_Name = val;}
 
 		// Framework value setters
 		/**
@@ -77,8 +84,15 @@ package com.intuit.developer.QBTarget.dto
 		}
 
 		private function set IDNrid(val:String):void						{_rid = val;}
-		private function set IDNRelatedPlayer(val:String):void			{_RelatedPlayer = Number(val);}
-		private function set IDNRelatedSmackdown(val:String):void		{_RelatedSmackdown = Number(val);}
+		private function set IDNName(val:String):void					{_Name = val;}
+		private function set IDNAvitar(val:String):void
+		{
+			_Avitar.url = val;
+		}
+		private function set IDNGames(val:String):void					{_Games = val;}
+		private function set IDNAddGame(val:String):void				{_AddGame = val;}
+		private function set IDNEntries(val:String):void				{_Entries = val;}
+		private function set IDNAddEntry(val:String):void				{_AddEntry = val;}
 		private function set IDNDateCreated(val:String):void			{_DateCreated = new Date(Number(val));}
 		private function set IDNDateModified(val:String):void			{_DateModified = new Date(Number(val));}
 		private function set IDNRecordId(val:String):void				{_RecordId = val;}
@@ -94,19 +108,23 @@ package com.intuit.developer.QBTarget.dto
 		}
 
 		// Object getters
-		public function getInfoObj():IKingussieInfo						{return SmackdownQueue_Info.getInstance();}
-		public function getFieldMapObj():IQuickBaseFieldMap				{return new SmackdownQueue_FieldMap();}
-		public function getFieldMapClass():Class						{return SmackdownQueue_FieldMap;}
-		public function get dtoClass():Class							{return SmackdownQueue_DTO;}
+		public function getInfoObj():IKingussieInfo						{return Players_Info.getInstance();}
+		public function getFieldMapObj():IQuickBaseFieldMap				{return new Players_FieldMap();}
+		public function getFieldMapClass():Class						{return Players_FieldMap;}
+		public function get dtoClass():Class							{return Players_DTO;}
 
 		// MetaData Information Objects getters
-		public function get RelatedPlayer_Info():NumberField			{return SmackdownQueue_Info.getInstance().RelatedPlayer_Info;}
-		public function get RelatedSmackdown_Info():NumberField			{return SmackdownQueue_Info.getInstance().RelatedSmackdown_Info;}
-		public function get DateCreated_Info():TimeStampField			{return SmackdownQueue_Info.getInstance().DateCreated_Info;}
-		public function get DateModified_Info():TimeStampField			{return SmackdownQueue_Info.getInstance().DateModified_Info;}
-		public function get RecordId_Info():RecordIdField				{return SmackdownQueue_Info.getInstance().RecordId_Info;}
-		public function get RecordOwner_Info():UserIdField				{return SmackdownQueue_Info.getInstance().RecordOwner_Info;}
-		public function get LastModifiedBy_Info():UserIdField			{return SmackdownQueue_Info.getInstance().LastModifiedBy_Info;}
+		public function get Name_Info():TextField						{return Players_Info.getInstance().Name_Info;}
+		public function get Avitar_Info():FileField						{return Players_Info.getInstance().Avitar_Info;}
+		public function get Games_Info():DbLinkField					{return Players_Info.getInstance().Games_Info;}
+		public function get AddGame_Info():URLField						{return Players_Info.getInstance().AddGame_Info;}
+		public function get Entries_Info():DbLinkField					{return Players_Info.getInstance().Entries_Info;}
+		public function get AddEntry_Info():URLField					{return Players_Info.getInstance().AddEntry_Info;}
+		public function get DateCreated_Info():TimeStampField			{return Players_Info.getInstance().DateCreated_Info;}
+		public function get DateModified_Info():TimeStampField			{return Players_Info.getInstance().DateModified_Info;}
+		public function get RecordId_Info():RecordIdField				{return Players_Info.getInstance().RecordId_Info;}
+		public function get RecordOwner_Info():UserIdField				{return Players_Info.getInstance().RecordOwner_Info;}
+		public function get LastModifiedBy_Info():UserIdField			{return Players_Info.getInstance().LastModifiedBy_Info;}
 
 	}
 }
