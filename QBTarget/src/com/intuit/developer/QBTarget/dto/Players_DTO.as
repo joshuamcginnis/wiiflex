@@ -31,6 +31,7 @@ package com.intuit.developer.QBTarget.dto
 		// Field value holding objects
 		private var _rid:String;
 		private var _isRecordOwnerDirty:Boolean = false;
+		private var _User:QuickBaseUserDTO;
 		private var _Name:String;
 		private var _Avitar:QuickBaseFileDTO = new QuickBaseFileDTO();
 		private var _Games:String;
@@ -45,6 +46,7 @@ package com.intuit.developer.QBTarget.dto
 
 		// Current value getters
 		public function get rid():String								{return _rid;}
+		public function get User():QuickBaseUserDTO 					{return _User;}
 		public function get Name():String								{return _Name;}
 		public function get Avitar():QuickBaseFileDTO 					{return _Avitar;}
 		public function get Games():String								{return _Games;}
@@ -70,6 +72,7 @@ package com.intuit.developer.QBTarget.dto
 			_RecordOwner = val;
 			_isRecordOwnerDirty = true;
 		}
+		public function set User(val:QuickBaseUserDTO):void 			{_User = val;}
 		public function set Name(val:String):void						{_Name = val;}
 
 		// Framework value setters
@@ -84,6 +87,11 @@ package com.intuit.developer.QBTarget.dto
 		}
 
 		private function set IDNrid(val:String):void						{_rid = val;}
+		private function set IDNUser(val:String):void
+		{
+			var model:QuickBaseMSAModel = QuickBaseMSAModel.getInstance();
+			_User = model.appUserList.findUserID(val);
+		}
 		private function set IDNName(val:String):void					{_Name = val;}
 		private function set IDNAvitar(val:String):void
 		{
@@ -114,6 +122,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get dtoClass():Class							{return Players_DTO;}
 
 		// MetaData Information Objects getters
+		public function get User_Info():UserIdField						{return Players_Info.getInstance().User_Info;}
 		public function get Name_Info():TextField						{return Players_Info.getInstance().Name_Info;}
 		public function get Avitar_Info():FileField						{return Players_Info.getInstance().Avitar_Info;}
 		public function get Games_Info():DbLinkField					{return Players_Info.getInstance().Games_Info;}

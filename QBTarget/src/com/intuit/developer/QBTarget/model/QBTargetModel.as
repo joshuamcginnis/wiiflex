@@ -15,7 +15,7 @@ package com.intuit.developer.QBTarget.model
          
          
          //TODO: Define variables, setters, getters, etc. for your model here
-         public var gamesList:ArrayCollection = new ArrayCollection();
+         public var gameList:ArrayCollection = new ArrayCollection();
          
          //Singleton pattern implementation
          private static var _instance:QBTargetModel;

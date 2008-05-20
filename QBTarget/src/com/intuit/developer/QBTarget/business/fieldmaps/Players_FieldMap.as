@@ -16,6 +16,7 @@ package com.intuit.developer.QBTarget.business.fieldmaps
 
 		protected override function loadFids():void
 		{
+			columnFids.User = 12;
 			columnFids.Name = 6;
 			columnFids.Avitar = 7;
 			columnFids.Games = 8;
