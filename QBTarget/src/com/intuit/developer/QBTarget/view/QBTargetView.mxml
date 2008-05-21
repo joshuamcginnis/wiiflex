@@ -3,7 +3,7 @@
           creationComplete="waitForReady()"
           layout="horizontal" title="WiiFlex - How good are your wiiflexes?"
           height="70%" width="70%">
-   <mx:Style source="E:\wiiflex\QBTarget\obsidian\style\obsidian.css"/>
+   <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
          	import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
