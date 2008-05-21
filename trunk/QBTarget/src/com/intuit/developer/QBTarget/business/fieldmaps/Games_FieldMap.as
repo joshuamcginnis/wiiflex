@@ -19,7 +19,8 @@ package com.intuit.developer.QBTarget.business.fieldmaps
 			columnFids.TotalBullets = 6;
 			columnFids.ShotsTaken = 7;
 			columnFids.Hits = 8;
-			columnFids.RelatedUser = 9;
+			columnFids.PlayerID = 9;
+			columnFids.Player = 11;
 			columnFids.DateCreated = 1;
 			columnFids.DateModified = 2;
 			columnFids.rid = 3;
