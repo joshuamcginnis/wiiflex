@@ -3,7 +3,7 @@
    xmlns:core="com.quickbase.idn.core.*" 
    xmlns:view="com.intuit.developer.QBTarget.view.*" xmlns:control="com.intuit.developer.QBTarget.control.*"
    creationComplete="initApp()">
-   <mx:Style source="E:\wiiflex\QBTarget\obsidian\style\obsidian.css"/>
+   <mx:Style source="..\obsidian\style\obsidian.css"/>
     <mx:Script>
        <![CDATA[
          import mx.controls.Alert;
