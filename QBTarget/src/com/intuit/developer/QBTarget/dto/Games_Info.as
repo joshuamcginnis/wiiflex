@@ -117,19 +117,46 @@ package com.intuit.developer.QBTarget.dto
 			field.mode = ENMode.NotFound;
 			field.units = "";
 			field.findEnabled = true;
-			field.fieldName = "RelatedUser";
+			field.fieldName = "PlayerID";
 			field.formula = "";
 			field.tableName = "Games";
 			field.baseType = ENBaseType.Float;
 			field.allowNewChoices = false;
 			field.decimalPlaces = 0;
-			field.label = "RelatedUser";
+			field.label = "PlayerID";
 			field.foreignKey = 0;
 			field.role = ENRole.NotFound;
 			field.fieldHelp = "";
 			field.fid = 9;
-			_RelatedUserInfo = new NumberField(field);
-			_fieldInfo.addItem(_RelatedUserInfo);
+			_PlayerIDInfo = new NumberField(field);
+			_fieldInfo.addItem(_PlayerIDInfo);
+
+			field = new FieldDescriptor();
+			field.lusFid = 9;
+			field.unique = false;
+			field.width = 40;
+			field.appendOnly = false;
+			field.fieldType = ENFieldType.Text;
+			field.required = false;
+			field.doesDataCopy = false;
+			field.carryChoices = true;
+			field.lutFid = 6;
+			field.mode = ENMode.Lookup;
+			field.findEnabled = true;
+			field.fieldName = "Player";
+			field.formula = "";
+			field.tableName = "Games";
+			field.baseType = ENBaseType.Text;
+			field.allowNewChoices = false;
+			field.label = "Player";
+			field.foreignKey = 0;
+			field.allowHTML = false;
+			field.role = ENRole.NotFound;
+			field.fieldHelp = "";
+			field.fid = 11;
+			field.numLines = 0;
+			_PlayerInfo = new TextField(field);
+			_fieldInfo.addItem(_PlayerInfo);
 
 			field = new FieldDescriptor();
 			field.lusFid = 0;
@@ -264,7 +291,8 @@ package com.intuit.developer.QBTarget.dto
 		private var _TotalBulletsInfo:NumberField;
 		private var _ShotsTakenInfo:NumberField;
 		private var _HitsInfo:NumberField;
-		private var _RelatedUserInfo:NumberField;
+		private var _PlayerIDInfo:NumberField;
+		private var _PlayerInfo:TextField;
 		private var _DateCreatedInfo:TimeStampField;
 		private var _DateModifiedInfo:TimeStampField;
 		private var _RecordIdInfo:RecordIdField;
@@ -275,7 +303,8 @@ package com.intuit.developer.QBTarget.dto
 		public function get TotalBullets_Info():NumberField				{return _TotalBulletsInfo;}
 		public function get ShotsTaken_Info():NumberField				{return _ShotsTakenInfo;}
 		public function get Hits_Info():NumberField						{return _HitsInfo;}
-		public function get RelatedUser_Info():NumberField				{return _RelatedUserInfo;}
+		public function get PlayerID_Info():NumberField					{return _PlayerIDInfo;}
+		public function get Player_Info():TextField						{return _PlayerInfo;}
 		public function get DateCreated_Info():TimeStampField			{return _DateCreatedInfo;}
 		public function get DateModified_Info():TimeStampField			{return _DateModifiedInfo;}
 		public function get RecordId_Info():RecordIdField				{return _RecordIdInfo;}
@@ -283,7 +312,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get LastModifiedBy_Info():UserIdField			{return _LastModifiedByInfo;}
 
 		// Field getter variables
-		private var _fieldNames:ArrayCollection = new ArrayCollection(["TotalBullets", "ShotsTaken", "Hits", "RelatedUser", 
+		private var _fieldNames:ArrayCollection = new ArrayCollection(["TotalBullets", "ShotsTaken", "Hits", "PlayerID", "Player", 
 																		"DateCreated", "DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
 		private var _fieldInfo:ArrayCollection = new ArrayCollection();
 

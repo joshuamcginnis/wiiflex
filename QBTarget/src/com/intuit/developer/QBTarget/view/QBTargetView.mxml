@@ -164,7 +164,7 @@
 				</mx:Form>
 				<mx:DataGrid id="gameList" dataProvider="{model.gameList}" width="453" height="50%">
 					<mx:columns>
-						<mx:DataGridColumn dataField="RelatedUser" headerText="Player" />
+						<mx:DataGridColumn dataField="Player" headerText="Player" />
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
 						<mx:DataGridColumn dataField="ShotsTaken" headerText="Shots Taken" />
 						<mx:DataGridColumn dataField="Hits" headerText="Hits" />
