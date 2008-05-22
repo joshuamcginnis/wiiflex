@@ -54,10 +54,16 @@
 				
 				_wiiStatus = "Disconnected";
 				
-				_wiimote = new Wiimote();
-				_wiimote.addEventListener(Event.CONNECT, OnWiimote_CONNECT);
-				_wiimote.addEventListener(IOErrorEvent.IO_ERROR, OnWiimote_ERROR);
-				_wiimote.connect();
+				try
+				{
+					_wiimote = new Wiimote();
+					_wiimote.addEventListener(Event.CONNECT, OnWiimote_CONNECT);
+					_wiimote.addEventListener(IOErrorEvent.IO_ERROR, OnWiimote_ERROR);
+					_wiimote.connect();
+				}
+				catch (err:SecurityErrorEvent)
+				{
+				}
            }
            
            //function to call when the QBApp component notifies us that QuickBase is ready
