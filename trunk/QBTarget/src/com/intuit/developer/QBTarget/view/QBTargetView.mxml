@@ -6,26 +6,28 @@
    <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
+         	import com.quickbase.idn.control.events.QuickBaseEventGetUserInfo;
+         	import com.quickbase.idn.dto.QuickBaseUserDTO;
 			import org.wiiflash.events.ButtonEvent;
 			import org.wiiflash.events.WiimoteEvent;
-			import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
-			import com.intuit.developer.QBTarget.dto.Games_Info;
-			import com.intuit.developer.QBTarget.dto.Games_DTO;
-			import com.quickbase.idn.control.events.KingussieEvent;
-			import mx.core.UIComponent;
-			 
-			import com.intuit.developer.QBTarget.model.QBTargetModel; //replace with correct model reference
-			import com.adobe.cairngorm.control.CairngormEventDispatcher;
-			import com.quickbase.idn.core.QBApp;
+         	import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
+         	import com.intuit.developer.QBTarget.dto.Games_Info;
+         	import com.intuit.developer.QBTarget.dto.Games_DTO;
+         	import com.quickbase.idn.control.events.KingussieEvent;
+           import mx.core.UIComponent;
+         
+           import com.intuit.developer.QBTarget.model.QBTargetModel; //replace with correct model reference
+           import com.adobe.cairngorm.control.CairngormEventDispatcher;
+           import com.quickbase.idn.core.QBApp;
                
 			import org.wiiflash.Wiimote;
 			
-			//Get the model, make sure we can bind to it in our UI components
-			[Bindable] public var model:QBTargetModel = QBTargetModel.getInstance();
-			
-			//variable to record whether the UI has been initialized
-			private var panelInitialized:Boolean = false;
-           
+           //Get the model, make sure we can bind to it in our UI components
+           [Bindable] public var model:QBTargetModel = QBTargetModel.getInstance();
+               
+           //variable to record whether the UI has been initialized
+           private var panelInitialized:Boolean = false;
+               
 			private var _wiimote:Wiimote;
 			
 			[Bindable]
@@ -37,14 +39,14 @@
 			
 			private var _crosshairCorrection:uint;
                
-			//function to call when the component creation is complete, basically just
-			//ensures that we wait for QBApp to tell us QuickBase is ready for 
-			//interaction.
-			private function waitForReady():void
-			{
-				_targetTimer.addEventListener(TimerEvent.TIMER, onMoveTarget);
-				
-				this.addEventListener(QBApp.QUICKBASE_READY_EVENT, initPanel);
+           //function to call when the component creation is complete, basically just
+           //ensures that we wait for QBApp to tell us QuickBase is ready for 
+           //interaction.
+           private function waitForReady():void
+           {
+               _targetTimer.addEventListener(TimerEvent.TIMER, onMoveTarget);
+           	
+               this.addEventListener(QBApp.QUICKBASE_READY_EVENT, initPanel);
 				
 				_wiiStatus = "Disconnected";
 				
@@ -52,19 +54,21 @@
 				_wiimote.addEventListener(Event.CONNECT, OnWiimote_CONNECT);
 				_wiimote.addEventListener(IOErrorEvent.IO_ERROR, OnWiimote_ERROR);
 				_wiimote.connect();
-			}
-   
-			//function to call when the QBApp component notifies us that QuickBase is ready
-			//for interaction.
-			private function initPanel(ev:Event):void
-				{
+           }
+           
+           //function to call when the QBApp component notifies us that QuickBase is ready
+           //for interaction.
+           private function initPanel(ev:Event):void
+           {
 				if (!panelInitialized)
 					{
-					var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
-					getGameList.dispatch();
-					panelInitialized = true;
-					}
-				}
+               	   var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
+               	   getGameList.dispatch();
+               	   var getCurrentUser:QuickBaseEventGetUserInfo = new QuickBaseEventGetUserInfo(model, "currentPlayer");
+               	   getCurrentUser.dispatch();
+                   panelInitialized = true;
+               }
+           }
            
 			private function OnWiimote_CONNECT(evt:Event):void
 			{
@@ -242,11 +246,11 @@
 					if (_wiimote.hasEventListener(WiimoteEvent.UPDATE))
 					{
 						_wiimote.removeEventListener(WiimoteEvent.UPDATE, OnWiimote_Update);
-					}
+				}
 					if (_wiimote.hasEventListener(ButtonEvent.B_PRESS))
 					{
 						_wiimote.removeEventListener(ButtonEvent.B_PRESS, onShot);
-					}
+			}
 				}
 			}
 			
@@ -262,7 +266,7 @@
 					if (event.type == ButtonEvent.B_PRESS)
 					{
 						_targetVelocity += _difficultyIncrease;
-					}
+			}
 					else
 					{
 						_targetVelocity += (_difficultyIncrease * 2);
@@ -278,9 +282,12 @@
 		</mx:Canvas>
 		<mx:HBox width="100%" height="100%">
 			<mx:VBox height="100%">
-				<mx:Form width="100%" height="165">
+				<mx:Form width="100%" height="170">
 					<mx:FormItem horizontalAlign="right" width="100%" direction="horizontal">
 						<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()" />
+					</mx:FormItem>
+					<mx:FormItem label="Player" width="100%" direction="horizontal">
+						<mx:Text text="{model.currentPlayer.userName}" />
 					</mx:FormItem>
 					<mx:FormItem label="Wii Status:" width="100%" direction="horizontal">
 						<mx:Text id="myWiiStatus" text="{_wiiStatus}" />
@@ -302,6 +309,7 @@
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
 						<mx:DataGridColumn dataField="ShotsTaken" headerText="Shots Taken" />
 						<mx:DataGridColumn dataField="Hits" headerText="Hits" />
+						<mx:DataGridColumn dataField="Complete" headerText="Complete" />
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>

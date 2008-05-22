@@ -36,6 +36,7 @@ package com.intuit.developer.QBTarget.dto
 		private var _Hits:Number;
 		private var _PlayerID:Number;
 		private var _Player:String;
+		private var _Complete:Boolean;
 		private var _DateCreated:Date;
 		private var _DateModified:Date;
 		private var _RecordId:String;
@@ -49,6 +50,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get Hits():Number								{return _Hits;}
 		public function get PlayerID():Number							{return _PlayerID;}
 		public function get Player():String								{return _Player;}
+		public function get Complete():Boolean							{return _Complete;}
 		public function get DateCreated():Date							{return _DateCreated;}
 		public function get DateModified():Date							{return _DateModified;}
 		public function get RecordId():String							{return _rid;}
@@ -72,6 +74,7 @@ package com.intuit.developer.QBTarget.dto
 		public function set ShotsTaken(val:Number):void					{_ShotsTaken = val;}
 		public function set Hits(val:Number):void						{_Hits = val;}
 		public function set PlayerID(val:Number):void					{_PlayerID = val;}
+		public function set Complete(val:Boolean):void					{_Complete = val;}
 
 		// Framework value setters
 		/**
@@ -90,6 +93,7 @@ package com.intuit.developer.QBTarget.dto
 		private function set IDNHits(val:String):void					{_Hits = Number(val);}
 		private function set IDNPlayerID(val:String):void				{_PlayerID = Number(val);}
 		private function set IDNPlayer(val:String):void					{_Player = val;}
+		private function set IDNComplete(val:String):void				{_Complete = Boolean(Number(val));}
 		private function set IDNDateCreated(val:String):void			{_DateCreated = new Date(Number(val));}
 		private function set IDNDateModified(val:String):void			{_DateModified = new Date(Number(val));}
 		private function set IDNRecordId(val:String):void				{_RecordId = val;}
@@ -116,6 +120,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get Hits_Info():NumberField						{return Games_Info.getInstance().Hits_Info;}
 		public function get PlayerID_Info():NumberField					{return Games_Info.getInstance().PlayerID_Info;}
 		public function get Player_Info():TextField						{return Games_Info.getInstance().Player_Info;}
+		public function get Complete_Info():BooleanField				{return Games_Info.getInstance().Complete_Info;}
 		public function get DateCreated_Info():TimeStampField			{return Games_Info.getInstance().DateCreated_Info;}
 		public function get DateModified_Info():TimeStampField			{return Games_Info.getInstance().DateModified_Info;}
 		public function get RecordId_Info():RecordIdField				{return Games_Info.getInstance().RecordId_Info;}
