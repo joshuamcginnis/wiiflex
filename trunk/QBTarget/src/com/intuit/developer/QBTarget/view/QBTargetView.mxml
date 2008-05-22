@@ -6,56 +6,128 @@
    <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
-         	import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
-         	import com.intuit.developer.QBTarget.dto.Games_Info;
-         	import com.intuit.developer.QBTarget.dto.Games_DTO;
-         	import com.quickbase.idn.control.events.KingussieEvent;
-           import mx.core.UIComponent;
-         
-           import com.intuit.developer.QBTarget.model.QBTargetModel; //replace with correct model reference
-           import com.adobe.cairngorm.control.CairngormEventDispatcher;
-           import com.quickbase.idn.core.QBApp;
+			import org.wiiflash.events.ButtonEvent;
+			import org.wiiflash.events.WiimoteEvent;
+			import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
+			import com.intuit.developer.QBTarget.dto.Games_Info;
+			import com.intuit.developer.QBTarget.dto.Games_DTO;
+			import com.quickbase.idn.control.events.KingussieEvent;
+			import mx.core.UIComponent;
+			 
+			import com.intuit.developer.QBTarget.model.QBTargetModel; //replace with correct model reference
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import com.quickbase.idn.core.QBApp;
                
-           //Get the model, make sure we can bind to it in our UI components
-           [Bindable] public var model:QBTargetModel = QBTargetModel.getInstance();
-               
-           //variable to record whether the UI has been initialized
-           private var panelInitialized:Boolean = false;
-               
-           //function to call when the component creation is complete, basically just
-           //ensures that we wait for QBApp to tell us QuickBase is ready for 
-           //interaction.
-           private function waitForReady():void
-           {
-               _targetTimer.addEventListener(TimerEvent.TIMER, onMoveTarget);
-           	
-               this.addEventListener(QBApp.QUICKBASE_READY_EVENT, initPanel);
-           }
+			import org.wiiflash.Wiimote;
+			
+			//Get the model, make sure we can bind to it in our UI components
+			[Bindable] public var model:QBTargetModel = QBTargetModel.getInstance();
+			
+			//variable to record whether the UI has been initialized
+			private var panelInitialized:Boolean = false;
            
-           //function to call when the QBApp component notifies us that QuickBase is ready
-           //for interaction.
-           private function initPanel(ev:Event):void
-           {
-               if (!panelInitialized) {
-               	   var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
-               	   getGameList.dispatch();
-                   panelInitialized = true;
-               }
-           }
+			private var _wiimote:Wiimote;
+			
+			[Bindable]
+			private var _wiiStatus:String;
+			
+			[Embed(source="../../../../../../images/crosshair.png")]
+			[Bindable]
+			private var _cursor:Class;
+			
+			private var _crosshairCorrection:uint;
+               
+			//function to call when the component creation is complete, basically just
+			//ensures that we wait for QBApp to tell us QuickBase is ready for 
+			//interaction.
+			private function waitForReady():void
+			{
+				_targetTimer.addEventListener(TimerEvent.TIMER, onMoveTarget);
+				
+				this.addEventListener(QBApp.QUICKBASE_READY_EVENT, initPanel);
+				
+				_wiiStatus = "Disconnected";
+				
+				_wiimote = new Wiimote();
+				_wiimote.addEventListener(Event.CONNECT, OnWiimote_CONNECT);
+				_wiimote.addEventListener(IOErrorEvent.IO_ERROR, OnWiimote_ERROR);
+				_wiimote.connect();
+			}
+   
+			//function to call when the QBApp component notifies us that QuickBase is ready
+			//for interaction.
+			private function initPanel(ev:Event):void
+				{
+				if (!panelInitialized)
+					{
+					var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
+					getGameList.dispatch();
+					panelInitialized = true;
+					}
+				}
            
+			private function OnWiimote_CONNECT(evt:Event):void
+			{
+				_wiiStatus = "Connected";
+				imgCursor.visible = true;
+				
+				_wiimote.addEventListener(ButtonEvent.LEFT_PRESS, UpdateSensitivity);
+				_wiimote.addEventListener(ButtonEvent.RIGHT_PRESS, UpdateSensitivity);
+			}
+
+			private function OnWiimote_ERROR(evt:IOErrorEvent):void
+			{
+				_wiiStatus = "Not Found";
+				imgCursor.visible = false;
+			}
+			
+			private function UpdateSensitivity(evt:Event):void
+			{
+				if (evt.type == ButtonEvent.RIGHT_PRESS)
+				{
+					sldSensitivity.value++;
+				}
+				else
+				{
+					sldSensitivity.value--;
+				}
+			}
+			
+			private function OnWiimote_Update(evt:WiimoteEvent):void
+			{
+				var roll:Number = _wiimote.roll * sldSensitivity.value;
+				var pitch:Number = _wiimote.pitch * sldSensitivity.value;
+				
+				imgCursor.x += roll;
+				imgCursor.y += pitch;
+				
+				if (imgCursor.x + _crosshairCorrection < _fieldRect.left) 
+					imgCursor.x = _fieldRect.left - _crosshairCorrection;
+				else if (imgCursor.x + _crosshairCorrection > _fieldRect.right) 
+					imgCursor.x = _fieldRect.right - _crosshairCorrection;
+
+				if (imgCursor.y + _crosshairCorrection < _fieldRect.top) 
+					imgCursor.y = _fieldRect.top - _crosshairCorrection;
+				else if (imgCursor.y + _crosshairCorrection > _fieldRect.bottom) 
+					imgCursor.y = _fieldRect.bottom - _crosshairCorrection;
+			}
+
 			//Start Game Play code
 			private var _targetRadius:int = 30;
 			private var _target:UIComponent = new UIComponent();
 			private var _fieldRect:Rectangle = new Rectangle(_targetRadius, _targetRadius);
-			private var _targetVelocity:int = 10;
+			private var _targetVelocity:int = 5;
 			private var _targetDirection:Number = 0;
 			private var _targetDeltaX:int = 0;
 			private var _targetDeltaY:int = 0;
 			private var _targetTimer:Timer = new Timer(5, 0);
 			private var _angleCorrection:Number = 0.2;
+			private var _difficultyUpdateShot:int = 5;
+			private var _difficultyCountDown:int;
+			private var _difficultyIncrease:int = 3;
 			
 			[Bindable] 
-			private var _bullets:int = 30;
+			private var _bullets:int = 10;
 
 			[Bindable] 
 			private var _score:int = 0;
@@ -70,8 +142,10 @@
 				
 				_fieldRect.x = _targetRadius;
 				_fieldRect.y = _targetRadius;
-				_fieldRect.width = field.width - (3 * _targetRadius);
+				_fieldRect.width = field.width - (2 * _targetRadius);
 				_fieldRect.height = field.height - (2 * _targetRadius);
+				
+				_crosshairCorrection = Math.round(imgCursor.width / 2);
 				
 				_target.graphics.clear();
 				if (field.contains(_target))
@@ -81,8 +155,7 @@
 				
 				_target.graphics.beginFill(0x192f9b);
 				_target.graphics.drawCircle(0, 0 ,_targetRadius);
-				_target.x = (Math.random() * _fieldRect.width) + _targetRadius;
-				_target.y = (Math.random() * _fieldRect.height) + _targetRadius;
+				changeLocation();
 				_target.graphics.endFill();
 				
 				field.addChild(_target);
@@ -95,12 +168,31 @@
 				{
 					field.addEventListener(MouseEvent.MOUSE_DOWN, onShot);
 				}
+				if (!_wiimote.hasEventListener(ButtonEvent.B_PRESS))
+				{
+					_wiimote.addEventListener(ButtonEvent.B_PRESS, onShot);
+				}
 				
+				changeDirection();
+				_difficultyCountDown = _difficultyUpdateShot;
+				
+				_wiimote.addEventListener(WiimoteEvent.UPDATE, OnWiimote_Update);
+
+				_targetTimer.start();
+			}
+			
+			// Yes.  I know it is a function that updates globals, but it works.
+			private function changeDirection():void
+			{
 				_targetDirection = (Math.random() * ((2 * Math.PI) - (2 * _angleCorrection))) + _angleCorrection;
 				_targetDeltaX = Math.cos(_targetDirection) * _targetVelocity;
 				_targetDeltaY = Math.sin(_targetDirection) * _targetVelocity * -1;
-
-				_targetTimer.start();
+			}
+			
+			private function changeLocation():void
+			{
+				_target.x = (Math.random() * _fieldRect.width) + _targetRadius;
+				_target.y = (Math.random() * _fieldRect.height) + _targetRadius;
 			}
 			
 			private function onMoveTarget(event:TimerEvent):void
@@ -119,9 +211,19 @@
 				}
 			}
 			
-			private function onShot(event:MouseEvent):void
+			private function onShot(event:Event):void
 			{
 				_bullets--;
+				
+				if (event.type == ButtonEvent.B_PRESS)
+				{
+					if (Math.abs(_target.x - imgCursor.x - _crosshairCorrection) < _targetRadius && Math.abs(_target.y - imgCursor.y - _crosshairCorrection) < _targetRadius)
+					{
+						onHit(event);
+						_wiimote.rumbleTimeout = 100;
+					}
+				}
+				
 				if (_bullets == 0)
 				{
 					_targetTimer.stop();
@@ -136,14 +238,39 @@
 					{
 						field.removeEventListener(MouseEvent.MOUSE_DOWN, onShot);
 					}
+					
+					if (_wiimote.hasEventListener(WiimoteEvent.UPDATE))
+					{
+						_wiimote.removeEventListener(WiimoteEvent.UPDATE, OnWiimote_Update);
+					}
+					if (_wiimote.hasEventListener(ButtonEvent.B_PRESS))
+					{
+						_wiimote.removeEventListener(ButtonEvent.B_PRESS, onShot);
+					}
 				}
 			}
 			
-			private function onHit(event:MouseEvent):void
+			private function onHit(event:Event):void
 			{
 				_score++;
+				
+				if (--_difficultyCountDown == 0)
+				{
+					_difficultyCountDown = _difficultyUpdateShot;
+					changeLocation();
+					
+					if (event.type == ButtonEvent.B_PRESS)
+					{
+						_targetVelocity += _difficultyIncrease;
+					}
+					else
+					{
+						_targetVelocity += (_difficultyIncrease * 2);
+					}
+				}
+				changeDirection();
 			}
-			//End Game Play code             
+			//End Game Play code
          ]]>
    </mx:Script>  
 	<mx:VBox width="100%" height="100%">
@@ -154,6 +281,13 @@
 				<mx:Form width="100%" height="165">
 					<mx:FormItem horizontalAlign="right" width="100%" direction="horizontal">
 						<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()" />
+					</mx:FormItem>
+					<mx:FormItem label="Wii Status:" width="100%" direction="horizontal">
+						<mx:Text id="myWiiStatus" text="{_wiiStatus}" />
+					</mx:FormItem>
+					<mx:FormItem label="Sensitivity" width="100%" direction="horizontal">
+						<mx:HSlider id="sldSensitivity" minimum="1" maximum="50" value="25" allowTrackClick="true" liveDragging="true" width="100"/>
+						<mx:Text id="sldSensitivityValue" text="{Math.round(sldSensitivity.value)}" />
 					</mx:FormItem>
 					<mx:FormItem label="Shots Remaining:" width="100%" direction="horizontal">
 						<mx:Text id="myAmmo" text="{_bullets}" />
@@ -172,6 +306,7 @@
 				</mx:DataGrid>
 			</mx:VBox>
 			<mx:Canvas id="field" width="100%" height="100%" styleName="gamebox">
+				<mx:Image id="imgCursor" source="{_cursor}" x="0" y="0" visible="false"/>
 			</mx:Canvas>
 		</mx:HBox>
 	</mx:VBox>
