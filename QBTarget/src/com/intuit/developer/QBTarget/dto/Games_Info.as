@@ -161,6 +161,28 @@ package com.intuit.developer.QBTarget.dto
 			field = new FieldDescriptor();
 			field.lusFid = 0;
 			field.unique = false;
+			field.fieldType = ENFieldType.CheckBox;
+			field.required = false;
+			field.doesDataCopy = true;
+			field.carryChoices = true;
+			field.lutFid = 0;
+			field.mode = ENMode.NotFound;
+			field.findEnabled = true;
+			field.fieldName = "Complete";
+			field.tableName = "Games";
+			field.baseType = ENBaseType.Boolean;
+			field.allowNewChoices = false;
+			field.label = "Complete";
+			field.foreignKey = 0;
+			field.role = ENRole.NotFound;
+			field.fieldHelp = "";
+			field.fid = 12;
+			_CompleteInfo = new BooleanField(field);
+			_fieldInfo.addItem(_CompleteInfo);
+
+			field = new FieldDescriptor();
+			field.lusFid = 0;
+			field.unique = false;
 			field.fieldType = ENFieldType.TimeStamp;
 			field.required = false;
 			field.doesDataCopy = false;
@@ -293,6 +315,7 @@ package com.intuit.developer.QBTarget.dto
 		private var _HitsInfo:NumberField;
 		private var _PlayerIDInfo:NumberField;
 		private var _PlayerInfo:TextField;
+		private var _CompleteInfo:BooleanField;
 		private var _DateCreatedInfo:TimeStampField;
 		private var _DateModifiedInfo:TimeStampField;
 		private var _RecordIdInfo:RecordIdField;
@@ -305,6 +328,7 @@ package com.intuit.developer.QBTarget.dto
 		public function get Hits_Info():NumberField						{return _HitsInfo;}
 		public function get PlayerID_Info():NumberField					{return _PlayerIDInfo;}
 		public function get Player_Info():TextField						{return _PlayerInfo;}
+		public function get Complete_Info():BooleanField				{return _CompleteInfo;}
 		public function get DateCreated_Info():TimeStampField			{return _DateCreatedInfo;}
 		public function get DateModified_Info():TimeStampField			{return _DateModifiedInfo;}
 		public function get RecordId_Info():RecordIdField				{return _RecordIdInfo;}
@@ -313,7 +337,7 @@ package com.intuit.developer.QBTarget.dto
 
 		// Field getter variables
 		private var _fieldNames:ArrayCollection = new ArrayCollection(["TotalBullets", "ShotsTaken", "Hits", "PlayerID", "Player", 
-																		"DateCreated", "DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
+																		"Complete", "DateCreated", "DateModified", "RecordId", "RecordOwner", "LastModifiedBy", ]);
 		private var _fieldInfo:ArrayCollection = new ArrayCollection();
 
 		// Field getters

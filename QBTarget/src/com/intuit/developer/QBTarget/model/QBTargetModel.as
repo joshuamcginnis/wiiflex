@@ -2,6 +2,7 @@ package com.intuit.developer.QBTarget.model
 {
    import com.adobe.cairngorm.model.IModelLocator;
    import com.quickbase.idn.model.QuickBaseMSAModel;
+   import com.quickbase.idn.dto.QuickBaseUserDTO;
    
    import mx.collections.ArrayCollection;
    
@@ -16,6 +17,7 @@ package com.intuit.developer.QBTarget.model
          
          //TODO: Define variables, setters, getters, etc. for your model here
          public var gameList:ArrayCollection = new ArrayCollection();
+         public var currentPlayer:QuickBaseUserDTO = new QuickBaseUserDTO();
          
          //Singleton pattern implementation
          private static var _instance:QBTargetModel;

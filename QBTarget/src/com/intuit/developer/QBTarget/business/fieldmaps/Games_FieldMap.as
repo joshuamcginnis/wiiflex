@@ -21,6 +21,7 @@ package com.intuit.developer.QBTarget.business.fieldmaps
 			columnFids.Hits = 8;
 			columnFids.PlayerID = 9;
 			columnFids.Player = 11;
+			columnFids.Complete = 12;
 			columnFids.DateCreated = 1;
 			columnFids.DateModified = 2;
 			columnFids.rid = 3;
