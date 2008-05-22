@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
           creationComplete="waitForReady()"
           layout="horizontal" title="WiiFlex - How good are your wiiflexes?"
-          height="90%" width="90%">
+          height="80%" width="80%">
    <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
@@ -308,7 +308,7 @@
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
 						<mx:DataGridColumn dataField="ShotsTaken" headerText="Shots Taken" />
 						<mx:DataGridColumn dataField="Hits" headerText="Hits" />
-						<mx:DataGridColumn dataField="Complete" headerText="Complete" />
+						<mx:DataGridColumn dataField="Complete" headerText="Playing now?" />
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
