@@ -6,6 +6,7 @@
    <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
+         	import com.quickbase.idn.control.events.QuickBaseEventStoreRecord;
          	import com.quickbase.idn.control.events.QuickBaseEventGetUserInfo;
          	import com.quickbase.idn.dto.QuickBaseUserDTO;
 			import org.wiiflash.events.ButtonEvent;
@@ -13,6 +14,8 @@
          	import com.quickbase.idn.control.events.QuickBaseEventQueryRecords;
          	import com.intuit.developer.QBTarget.dto.Games_Info;
          	import com.intuit.developer.QBTarget.dto.Games_DTO;
+         	import com.intuit.developer.QBTarget.dto.Players_Info;
+         	import com.intuit.developer.QBTarget.dto.Players_DTO;
          	import com.quickbase.idn.control.events.KingussieEvent;
            import mx.core.UIComponent;
          
@@ -45,6 +48,7 @@
            private function waitForReady():void
            {
                _targetTimer.addEventListener(TimerEvent.TIMER, onMoveTarget);
+               _gameListTimer.addEventListener(TimerEvent.TIMER, updateGameList);
            	
                this.addEventListener(QBApp.QUICKBASE_READY_EVENT, initPanel);
 				
@@ -61,14 +65,28 @@
            private function initPanel(ev:Event):void
            {
 				if (!panelInitialized)
-					{
-               	   var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
-               	   getGameList.dispatch();
-               	   var getCurrentUser:QuickBaseEventGetUserInfo = new QuickBaseEventGetUserInfo(model, "currentPlayer");
-               	   getCurrentUser.dispatch();
-                   panelInitialized = true;
-               }
+				{
+					updateGameList();
+					var getPlayerList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Players_DTO, model, "playerList");
+					getPlayerList.dispatch();
+					var getCurrentUser:QuickBaseEventGetUserInfo = new QuickBaseEventGetUserInfo(model, "currentQBUser");
+					getCurrentUser.dispatch();
+					panelInitialized = true;
+					
+					_gameListTimer.start();
+				}
            }
+           
+			private function updateGameList(ev:Event = null):void
+			{
+				// Hack Warning;
+				if (_currentGame != null && !_currentGame.Complete)
+				{
+					storeGame(_currentGame);
+				}
+				var getGameList:QuickBaseEventQueryRecords = new QuickBaseEventQueryRecords(Games_DTO, model, "gameList");
+				getGameList.dispatch();
+			}
            
 			private function OnWiimote_CONNECT(evt:Event):void
 			{
@@ -77,6 +95,7 @@
 				
 				_wiimote.addEventListener(ButtonEvent.LEFT_PRESS, UpdateSensitivity);
 				_wiimote.addEventListener(ButtonEvent.RIGHT_PRESS, UpdateSensitivity);
+				_wiimote.addEventListener(ButtonEvent.A_PRESS, onStartGame);
 			}
 
 			private function OnWiimote_ERROR(evt:IOErrorEvent):void
@@ -129,6 +148,12 @@
 			private var _difficultyUpdateShot:int = 5;
 			private var _difficultyCountDown:int;
 			private var _difficultyIncrease:int = 3;
+			private var _playerName:String;
+			private var _playerID:String;
+			private var _playerInfo:Players_Info;
+			private var _currentGame:Games_DTO = null;
+			private var _startingBullets:int = 30;
+			private var _gameListTimer:Timer = new Timer(5000, 0);
 			
 			[Bindable] 
 			private var _bullets:int = 10;
@@ -136,13 +161,40 @@
 			[Bindable] 
 			private var _score:int = 0;
 			
-			private function onStartGame():void
+			private function storeGame(game:Games_DTO):void
+			{
+				game.TotalBullets = _startingBullets;
+				game.ShotsTaken = _startingBullets - _bullets;
+				game.Hits = _score;
+				for (var i:int = 0; i < model.playerList.length; i++)
+				{
+					var u:Players_DTO = model.playerList.getItemAt(i) as Players_DTO;
+					if (u.User == model.currentQBUser)
+					{
+						game.PlayerID = parseInt(u.RecordId);
+					}					
+				}
+				
+				var storeGameEvent:QuickBaseEventStoreRecord = new QuickBaseEventStoreRecord(_currentGame);
+				storeGameEvent.dispatch();
+			}
+			
+			private function onStartGame(evt:Event = null):void
 			{
 				_targetTimer.stop();
 				btnStartGame.enabled = false;
+				if (_wiimote.hasEventListener(ButtonEvent.A_PRESS))
+				{
+					_wiimote.removeEventListener(ButtonEvent.A_PRESS, onStartGame);
+				}
+				
 				
 				_score = 0;
-				_bullets = 30;
+				_bullets = _startingBullets;
+				
+				_currentGame = new Games_DTO();
+				_currentGame.Complete = false;
+				storeGame(_currentGame);
 				
 				_fieldRect.x = _targetRadius;
 				_fieldRect.y = _targetRadius;
@@ -246,11 +298,18 @@
 					if (_wiimote.hasEventListener(WiimoteEvent.UPDATE))
 					{
 						_wiimote.removeEventListener(WiimoteEvent.UPDATE, OnWiimote_Update);
-				}
+					}
 					if (_wiimote.hasEventListener(ButtonEvent.B_PRESS))
 					{
 						_wiimote.removeEventListener(ButtonEvent.B_PRESS, onShot);
-			}
+					}
+					if (!_wiimote.hasEventListener(ButtonEvent.A_PRESS))
+					{
+						_wiimote.addEventListener(ButtonEvent.A_PRESS, onStartGame);
+					}
+					
+					_currentGame.Complete = true;
+					storeGame(_currentGame);
 				}
 			}
 			
@@ -274,6 +333,12 @@
 				}
 				changeDirection();
 			}
+			
+			private function createNewGame():void
+			{
+				var game:Games_DTO = new Games_DTO;
+				game.PlayerID
+			}
 			//End Game Play code
          ]]>
    </mx:Script> 	
@@ -283,7 +348,7 @@
 			<mx:VBox height="100%" width="70%">
 				<mx:Form width="100%" height="200">
 					<mx:FormItem label="Player" width="100%" direction="horizontal">
-						<mx:Text text="{model.currentPlayer.userName}" />
+						<mx:Text text="{model.currentQBUser.userName}" />
 					</mx:FormItem>
 					<mx:FormItem label="Wii Status:" width="100%" direction="horizontal">
 						<mx:Text id="myWiiStatus" text="{_wiiStatus}" />
