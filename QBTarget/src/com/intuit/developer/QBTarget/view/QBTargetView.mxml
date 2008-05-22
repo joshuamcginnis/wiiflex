@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
           creationComplete="waitForReady()"
           layout="horizontal" title="WiiFlex - How good are your wiiflexes?"
-          height="70%" width="70%">
+          height="90%" width="90%">
    <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
@@ -276,16 +276,12 @@
 			}
 			//End Game Play code
          ]]>
-   </mx:Script>  
+   </mx:Script> 	
 	<mx:VBox width="100%" height="100%">
-		<mx:Canvas width="100%" height="20">
-		</mx:Canvas>
+
 		<mx:HBox width="100%" height="100%">
-			<mx:VBox height="100%">
-				<mx:Form width="100%" height="170">
-					<mx:FormItem horizontalAlign="right" width="100%" direction="horizontal">
-						<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()" />
-					</mx:FormItem>
+			<mx:VBox height="100%" width="70%">
+				<mx:Form width="100%" height="200">
 					<mx:FormItem label="Player" width="100%" direction="horizontal">
 						<mx:Text text="{model.currentPlayer.userName}" />
 					</mx:FormItem>
@@ -302,8 +298,11 @@
 					<mx:FormItem label="Score:" width="100%" direction="horizontal">
 						<mx:Text id="myScore" text="{_score}" />
 					</mx:FormItem>
+					<mx:FormItem horizontalAlign="center" width="100%" direction="horizontal">
+						<mx:Button id="btnStartGame" label="Start Game" click="onStartGame()"  textAlign="center"/>
+					</mx:FormItem>
 				</mx:Form>
-				<mx:DataGrid id="gameList" dataProvider="{model.gameList}" width="453" height="50%">
+				<mx:DataGrid id="gameList" dataProvider="{model.gameList}" width="100%" height="50%">
 					<mx:columns>
 						<mx:DataGridColumn dataField="Player" headerText="Player" />
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
@@ -313,9 +312,10 @@
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
-			<mx:Canvas id="field" width="100%" height="100%" styleName="gamebox">
+			<mx:Canvas id="field" width="100%" height="100%" styleName="gamebox" backgroundColor="#FFFFFF">
 				<mx:Image id="imgCursor" source="{_cursor}" x="0" y="0" visible="false"/>
 			</mx:Canvas>
 		</mx:HBox>
-	</mx:VBox>
+	</mx:VBox>	
+	
 </mx:Panel>
