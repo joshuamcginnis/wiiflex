@@ -36,8 +36,8 @@
 			[Bindable]
 			private var _wiiStatus:String;
 			
-			[Embed(source="../../../../../../images/crosshair.png")]
 			[Bindable]
+			[Embed(source="../../../../../../images/crosshair.png")]
 			private var _cursor:Class;
 			
 			private var _crosshairCorrection:uint;
@@ -354,7 +354,7 @@
 						<mx:Text id="myWiiStatus" text="{_wiiStatus}" />
 					</mx:FormItem>
 					<mx:FormItem label="Sensitivity" width="100%" direction="horizontal">
-						<mx:HSlider id="sldSensitivity" minimum="1" maximum="50" value="25" allowTrackClick="true" liveDragging="true" width="100"/>
+						<mx:HSlider id="sldSensitivity" snapInterval="1" minimum="1" maximum="50" value="25" allowTrackClick="true" liveDragging="true" width="100"/>
 						<mx:Text id="sldSensitivityValue" text="{Math.round(sldSensitivity.value)}" />
 					</mx:FormItem>
 					<mx:FormItem label="Shots Remaining:" width="100%" direction="horizontal">
@@ -373,7 +373,22 @@
 						<mx:DataGridColumn dataField="TotalBullets" headerText="Total Bullets" />
 						<mx:DataGridColumn dataField="ShotsTaken" headerText="Shots Taken" />
 						<mx:DataGridColumn dataField="Hits" headerText="Hits" />
-						<mx:DataGridColumn dataField="Complete" headerText="Playing now?" />
+						<mx:DataGridColumn dataField="Complete" headerText="Playing now?">
+							<mx:itemRenderer>
+								<mx:Component>
+									<!--<mx:Image source="@Embed('../../../../../../images/checkboxOFF.png')" visible="{!data.Complete}" />-->
+									<mx:CheckBox enabled="false" selected="{!data.Complete}" 
+										selectedDisabledIcon="@Embed('../../../../../../images/checkboxON.gif')" 
+										selectedDownIcon="@Embed('../../../../../../images/checkboxON.gif')" 
+										selectedOverIcon="@Embed('../../../../../../images/checkboxON.gif')" 
+										selectedUpIcon="@Embed('../../../../../../images/checkboxON.gif')"
+										disabledIcon="@Embed('../../../../../../images/checkboxOFF.png')" 
+										downIcon="@Embed('../../../../../../images/checkboxOFF.png')" 
+										overIcon="@Embed('../../../../../../images/checkboxOFF.png')" 
+										upIcon="@Embed('../../../../../../images/checkboxOFF.png')"/>
+								</mx:Component>
+							</mx:itemRenderer>
+						</mx:DataGridColumn>
 					</mx:columns>
 				</mx:DataGrid>
 			</mx:VBox>
