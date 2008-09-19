@@ -2,7 +2,7 @@
 <mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" 
           creationComplete="waitForReady()"
           layout="horizontal" title="WiiFlex - How good are your wiiflexes?"
-          height="80%" width="80%">
+          height="60%" width="60%">
    <mx:Style source="..\..\..\..\..\..\obsidian\style\obsidian.css"/>
    <mx:Script>
          <![CDATA[
@@ -222,24 +222,32 @@
 				
 				field.addChild(_target);
 				
-				if (!_target.hasEventListener(MouseEvent.MOUSE_DOWN))
-				{
-					_target.addEventListener(MouseEvent.MOUSE_DOWN, onHit);
-				}
-				if (!field.hasEventListener(MouseEvent.MOUSE_DOWN))
-				{
-					field.addEventListener(MouseEvent.MOUSE_DOWN, onShot);
-				}
-				if (!_wiimote.hasEventListener(ButtonEvent.B_PRESS))
-				{
-					_wiimote.addEventListener(ButtonEvent.B_PRESS, onShot);
-				}
-				
 				changeDirection();
 				_difficultyCountDown = _difficultyUpdateShot;
-				
-				_wiimote.addEventListener(WiimoteEvent.UPDATE, OnWiimote_Update);
 
+				if (_wiimote.connected)
+				{
+					if (!_wiimote.hasEventListener(ButtonEvent.B_PRESS))
+					{
+						_wiimote.addEventListener(ButtonEvent.B_PRESS, onShot);
+					}
+					if (!_wiimote.hasEventListener(WiimoteEvent.UPDATE))
+					{
+						_wiimote.addEventListener(WiimoteEvent.UPDATE, OnWiimote_Update);
+					}
+				}
+				else
+				{
+					if (!_target.hasEventListener(MouseEvent.MOUSE_DOWN))
+					{
+						_target.addEventListener(MouseEvent.MOUSE_DOWN, onHit);
+					}
+					if (!field.hasEventListener(MouseEvent.MOUSE_DOWN))
+					{
+						field.addEventListener(MouseEvent.MOUSE_DOWN, onShot);
+					}
+				}
+				
 				_targetTimer.start();
 			}
 			
